@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSV 파일을 JS로 변환하기</title>
+<style>
+  #fileInput {
+    display: none;
+  }
+  #uploadButton {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  #fileName {
+    margin-top: 10px;
+  }
+  #inputColumns, #outputColumns {
+    width: 50px;
+  }
+  #downloadButton {
+    display: none;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <label for="inputColumns">입력 열 수:</label>
+  <input type="number" id="inputColumns" min="1" value="1">
+  <label for="outputColumns">출력 열 수:</label>
+  <input type="number" id="outputColumns" min="1" value="1">
+  <br>
+  <input type="file" id="fileInput" accept=".csv" onchange="handleFile(this.files)">
+  <button id="uploadButton" onclick="document.getElementById('fileInput').click()">CSV 파일 업로드</button>
+  <div id="fileName"></div>
+  <button id="downloadButton" onclick="downloadJavaScriptFile()">JS 파일 다운로드</button>
+  <script>
+    let csvFileName;
+    let inputColumns = 1;
+    let outputColumns = 1;
+    let inputData = [];
+    let outputData = [];
+
+    // 입력 열 수와 출력 열 수를 설정하는 함수
+    function setColumns() {
+      inputColumns = parseInt(document.getElementById('inputColumns').value);
+      outputColumns = parseInt(document.getElementById('outputColumns').value);
+    }
+
+    // CSV 파일을 처리하고 JavaScript로 변환하는 함수
+    function handleFile(files) {
+      setColumns(); // 열 수 설정
+
+      const file = files[0];
+      csvFileName = file.name;
+      document.getElementById('fileName').innerText = `업로드된 파일: ${csvFileName}`;
+
+      const reader = new FileReader();
+
+      // 파일 읽기 완료 시 동작할 함수
+      reader.onload = function(event) {
+        const contents = event.target.result;
+        const rows = contents.split('\n');
+        inputData = []; // 입력 데이터 배열 초기화
+        outputData = []; // 출력 데이터 배열 초기화
+
+        // 각 행을 파싱하여 입력 데이터와 출력 데이터로 분리
+        rows.forEach(row => {
+          const columns = row.split(',');
+          inputData.push(columns.slice(0, inputColumns)); // 입력 열 수만큼 데이터를 input 데이터에 추가
+          const outputRow = columns.slice(inputColumns);
+          // '\r' 문자를 제거하여 출력 데이터에 추가
+          outputData.push(outputRow.map(value => parseFloat(value.replace(/\r$/, ''))));
+        });
+
+        // 데이터를 JavaScript 코드 형식으로 변환
+        var jsCode = "var inputData = [\n";
+        inputData.forEach(function(row, index) {
+          jsCode += "  [" + row.join(', ') + "]";
+          if (index < inputData.length - 1) {
+            jsCode += ",\n";
+          } else {
+            jsCode += "\n";
+          }
+        });
+        jsCode += "];\n\nvar outputData = [\n";
+        outputData.forEach(function(row, index) {
+          jsCode += "  [" + row.join(', ') + "]";
+          if (index < outputData.length - 1) {
+            jsCode += ",\n";
+          } else {
+            jsCode += "\n";
+          }
+        });
+        jsCode += "];";
+
+        // 변환된 JavaScript 코드 출력
+        console.log(jsCode);
+        // JavaScript 파일 다운로드 버튼을 보이도록 설정
+        document.getElementById('downloadButton').style.display = 'inline-block';
+      };
+
+      // 파일 읽기 시작
+      reader.readAsText(file);
+    }
+
+    // JavaScript 파일 다운로드 함수
+    function downloadJavaScriptFile() {
+      setColumns(); // 열 수 설정
+
+      var jsCode = "var inputData = [\n";
+      inputData.forEach(function(row, index) {
+        jsCode += "  [" + row.join(', ') + "]";
+        if (index < inputData.length - 1) {
+          jsCode += ",\n";
+        } else {
+          jsCode += "\n";
+        }
+      });
+      jsCode += "];\n\nvar outputData = [\n";
+      outputData.forEach(function(row, index) {
+        jsCode += "  [" + row.join(', ') + "]";
+        if (index < outputData.length - 1) {
+          jsCode += ",\n";
+        } else {
+          jsCode += "\n";
+        }
+      });
+      jsCode += "];";
+
+      const blob = new Blob([jsCode], { type: 'text/javascript' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${csvFileName.replace('.csv', '')}.js`;
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
