@@ -1,0 +1,115 @@
+body {
+  font-family: "Times New Roman", Times, serif;
+  background-color: rgb(112 , 128 , 144) !important; /* 배경색을 회색(그레이)으로 지정 */
+  }
+
+a {
+  color: rgb(255, 255, 255); /* 링크의 글자 색을 회색으로 지정 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+h1 {
+  color: rgb(255, 255, 255); /* 제목의 글자 색을 회색으로 지정 */
+  text-decoration: none;
+  font-size: 60px;
+  text-align: center;
+  border-bottom:3px solid rgb(255, 255, 255);
+  margin:0;
+  padding:15px;
+}
+
+h2 {
+  color: rgb(255, 255, 255); /* 제목의 글자 색을 회색으로 지정 */
+  font-size: 30px;
+  margin:0;
+  padding:15px;
+}
+
+h3 {
+  color: rgb(255, 255, 255); /* 제목의 글자 색을 회색으로 지정 */
+  font-size: 30px;
+  margin:0;
+  padding:15px;
+}
+
+div {
+  text-align: center; /* 문단을 가운데 정렬 */
+  color: rgb(255, 255, 255); /* 문단의 글자 색을 회색으로 지정 */
+  font-size: 20px;
+  width: 1fr;
+  margin: 50px;
+  padding: 0px;
+}
+
+p {
+  text-align: center; /* 문단을 가운데 정렬 */
+  color: rgb(255, 255, 255); /* 문단의 글자 색을 회색으로 지정 */
+  font-size: 20px;
+}
+
+ol{
+  color: rgb(255, 255, 255); /* 목록 링크의 글자 색을 회색으로 지정 */
+  font-size: 20px;
+  text-decoration: none;
+  border-bottom:3px solid rgb(255, 255, 255);
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  width: 1fr;
+  margin: 0px;
+  padding: 0px;
+}
+
+li{
+  width: flex;
+  text-align: center; /* 가운데 정렬 */
+  justify-content: 10px;
+  margin-right: 50px;
+  padding: 5px;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0px;
+  padding: 0px;
+}
+
+@media (max-width:600px) {
+  #grid {
+    display: block;
+  }
+  ol { 
+    border-right: none;
+  }
+}
+
+
+/*csv to js 변환기*/
+label {
+  color: rgb(255, 255, 255); /* 원하는 색상으로 변경하세요. */
+}
+
+#fileInput {
+  display: none;
+}
+#uploadButton {
+  padding: 10px 15px;
+  background-color: #696969;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+#fileName {
+  margin-top: 10px;
+}
+#inputColumns, #outputColumns {
+  width: 50px;
+}
+#downloadButton {
+  display: none;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
