@@ -1,35 +1,237 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>TensorFlow.js - Artificial Neural Network</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="styel.css">
-        
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TensorFlow.js - Artificial Neural Network</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="styel.css">      
+    <style>
+        .code-block {
+            text-align: left;
+            font-size: 15px;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+                
+        #container {
+            text-align: center; /* 내부 요소 가운데 정렬 */
+    }
+    canvas {
+        max-width: 1000px; /* 그림의 최대 너비를 조정합니다 */
+        max-height: 1000px; /* 그림의 최대 높이를 조정합니다 */
+        margin-left: 0px; /* 왼쪽 여백을 50px로 지정하여 오른쪽으로 이동 */
+        border:3px solid rgb(0, 0, 0);
+        padding:5px;
+        display: inline-block; /* 그림과 막대를 인라인으로 표시합니다 */
+        vertical-align: top; /* 막대를 그림의 상단에 정렬합니다 */
+    }                       
     
-    <body>
-        <h1><a href="home.html">Data Science & Engineering</a></h1>  
-        
-        <ol>
-            <li><a href="Correlation Coefficient.html">Correlation Coefficient</a></li>
-            <li><a href="Perceptron.html">Perceptron</a></li>
-            <li><a href="Artificial Neural Network.html">Artificial Neural Network</a></li>
-            <li><a href="csv to js converter.html">csv to js converter</a></li>
-        </ol>
-        
-        
-        <div id="grid">
-            <h2>Hellow world.란 무엇인가?</h2>
-            <p><iframe width="893" height="502"
-                src="https://www.youtube.com/embed/7T7r_oSp0SE?list=PLuHgQVnccGMDZP7FJ_ZsUrdCGH68ppvPb"
-                title="WEB1 부록 - 코드의 힘 : 동영상 삽입" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe></p>
-                <p> 추가적인 내용도 넣음.</p>
-                <p>과연 어디까지 줄 바꿈을 하지 않을 것인가.
-                    <br>배고프다. 집가고싶다. 하지만 집에가도 똑같다. 먹고 자겠지.
-                    그치만 게임도 안하고, <br>아무것도 안하고 누워만 있고 싶을 걸 우짤까</p>
-        </div>
-    </body>
-</html>
+    </style>                   
+</head>
+    
+<body>
+    <h1><a href="home.html">Data Science & Engineering</a></h1>  
+                    
+    <ol>
+        <li><a href="Correlation Coefficient.html">Correlation Coefficient</a></li>
+        <li><a href="Perceptron.html">Perceptron</a></li>
+        <li><a href="Artificial Neural Network.html">Artificial Neural Network</a></li>
+        <li><a href="csv to js converter.html">csv to js converter</a></li>
+    </ol>
+                    
+    <div id="grid">
+        <h2>Correlation Coefficient (Pearson's r)</h2>
+        <p>
+            <li>피어슨 상관 계수 (Pearson Correlation Coefficient, PCC)</li>
+            두 변수 X와 Y 간의 선형 상관관계를 계량화한 수치</br>
+            피어슨 상관 계수는 코시-슈바르츠 부등식에 의해 +1과 -1 사이의 값을 가지며, +1은 완벽한 양의 선형관관계(비례), 0은 선형 관계 없음, 
+            -1은 완벽한 음의 선형 상관 관계(반비례)를 의미한다.</br>
+        </p>
+    </div>
+    <div>
+        <p>
+            <li>공식</li></br>
+            <strong>피어슨상관계수 = 공분산 / (표준편차*표준편차)</strong></br>
+            <div class = "formula">
+            <p><span class="tex2jax">\( r = \frac{n(\Sigma xy) - (\Sigma x)(\Sigma y)}{\sqrt{[n\Sigma x^2 - (\Sigma x)^2][n\Sigma y^2 - (\Sigma y)^2]}} \)</span></p>
+            <!--\( r = \frac{n(\Sigma xy) - (\Sigma x)(\Sigma y)}{\sqrt{[n\Sigma x^2 - (\Sigma x)^2][n\Sigma y^2 - (\Sigma y)^2]}} \)-->
+        </p>
+
+        <p>
+            <li>파이썬 코드</li></br>
+            파이썬 코드를 이용해서 상관관계 이미지를 그릴 수 있습니다.</br>
+            코드에 적혀있는 파일 이름만 주정하시면 됩니다</br>
+            추가적인 오류나 디테일은 아래에 적어두었습니다. </br>
+        </p>
+                                                        
+        <div class="code-block">
+            import numpy as np
+            import matplotlib.pyplot as plt
             
+            # CSV 파일에서 데이터 읽어오기
+            with open(r'C:\Users\user\Desktop\file name.csv', 'r') as f:
+            first_row = f.readline().strip().split(',')
+            
+            # 첫 번째 행은 변수의 이름으로 건너뜀
+            data = np.genfromtxt(r'C:\Users\user\Desktop\file name.csv', delimiter=',', skip_header=1)
+            
+            # 글꼴 및 글자 크기 설정
+            plt.rcParams['font.family'] = 'Times New Roman'
+            plt.rcParams['font.size'] = 15
+            
+            # 열린 히트맵 시각화
+            plt.figure(figsize=(10, 10))
+            plt.imshow(correlation_matrix, cmap='coolwarm', interpolation='nearest')
+            plt.colorbar(label='Correlation coefficient')
+            plt.title('Correlation Coefficient')
+            plt.xticks(ticks=np.arange(len(first_row)), labels=first_row, rotation=90)
+            plt.yticks(ticks=np.arange(len(first_row)), labels=first_row)
+            #plt.xlabel('Input Elements')
+            #plt.ylabel('Input Elements')
+            plt.tight_layout() 
+            plt.show()
+            
+            #numpy 설치오류 -> pip install numpy
+            #numpy 업데이트 ->C:\Users\user\AppData\Local\Programs\Python\Python39\python.exe -m pip install --upgrade pip
+            #히트멥 설치오류 -> pip install matplotlib               
+        </div>
+        
+    </div>
+
+        <li>상관계수 그려보기</li></br>
+        <p>
+            csv 엑셀파일을 이용해서 상관계수 그래프를 그릴수 있습니다.</br>
+            csv 파일에서 1행의 각 요소는 그래프의 x, y 축에 자동으로 입력됩니다.</br>
+            데이터는 +1 ~ -1의 값을 가집니다.</br>
+        </p>
+
+<input type="file" id="fileInput" accept=".csv" style="display: block; margin: 40px auto;"></br></br>
+<canvas id="correlation_heatmap"></canvas></br></br>
+    <script>
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+        
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const text = event.target.result;
+                const rows = text.trim().split('\n');
+                const firstRow = rows[0].split(',');
+                const data = rows.slice(1).map(row => row.split(',').map(parseFloat));
+            
+                // 상관 행렬 계산
+                const correlation_matrix = [];
+                for (let i = 0; i < data[0].length; i++) {
+                    correlation_matrix.push([]);
+                    for (let j = 0; j < data[0].length; j++) {
+                        const col1 = data.map(row => row[i]);
+                        const col2 = data.map(row => row[j]);
+                        const correlation_coefficient = pearsonCorrelation(col1, col2);
+                        correlation_matrix[i].push(correlation_coefficient);
+                    }
+                }
+            
+                // 히트맵 시각화
+                const canvas = document.getElementById('correlation_heatmap');
+                const ctx = canvas.getContext('2d');
+            
+                // 캔버스의 크기 및 간격 설정
+                const offsetY = 0; // 캔버스의 위쪽으로 이동할 값 (음수)
+                const offsetX = -100; // 오른쪽으로 이동할 값
+            
+                // 캔버스의 크기 및 간격 설정
+                const cellSize = 30; // 각 셀의 크기
+                const padding = 300; // 캔버스의 여백
+                
+                const width = (firstRow.length + 1) * cellSize; // 캔버스 너비
+                const height = (firstRow.length+ 2) * cellSize; // 캔버스 높이
+                canvas.width = width + padding + offsetX; // 오른쪽으로 이동할 값 추가
+                canvas.height = height + padding + offsetY; // 위쪽으로 이동할 값 추가하지 않음
+                ctx.fillStyle = 'white'; // 캔버스 배경을 흰색으로 채웁니다.
+                ctx.fillRect(offsetX, 0, canvas.width - offsetX, canvas.height + offsetY); // 위쪽 여백을 줄이고 캔버스 내용을 위로 이동
+            
+            
+                // 셀에 상관 계수 값 그리기
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                for (let i = 0; i < firstRow.length; i++) {
+                    for (let j = 0; j < firstRow.length; j++) {
+                        const x = (i + 1) * cellSize + padding / 2;
+                        const y = (j + 1) * cellSize + padding / 2;
+                        const value = correlation_matrix[i][j];
+                        const color = getColor(value);
+                        ctx.fillStyle = color;
+                        ctx.fillRect(x, y, cellSize, cellSize);
+                        ctx.fillStyle = 'black';
+                        ctx.fillText(value.toFixed(2), x + cellSize / 2, y + cellSize / 2);
+                    }
+                }
+
+                // X 축 레이블 추가 (90도 회전)
+                ctx.fillStyle = 'black';
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'top';
+                for (let i = 0; i < firstRow.length; i++) {
+                    const x = (i + 1) * cellSize + padding / 2;
+                    const y = height + padding / 2;
+                    ctx.save(); // 현재 캔버스 설정 저장
+                    ctx.translate(x, y); // 회전 중심점 이동
+                    ctx.rotate(-Math.PI / 2); // 90도 반시계 방향 회전
+                    const label = firstRow[i];
+                    const maxLength = cellSize * 1.5; // 최대 길이
+                    const truncatedLabel = truncateText(label, maxLength); // 길이 제한
+                    ctx.fillText(truncatedLabel, 0, 0);
+                    ctx.restore(); // 이전 캔버스 설정 복원
+                }
+            
+                // Y 축 레이블 추가
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                for (let i = 0; i < firstRow.length; i++) {
+                    const x = padding / 2;
+                    const y = (i + 1) * cellSize + padding / 2;
+                    ctx.fillText(firstRow[i], x, y);
+                }
+                
+                };
+        
+            reader.readAsText(file);
+        }
+    
+        // 상관 계수에 따른 색상 결정
+        function getColor(value) {
+            const opacity = Math.abs(value); // 절대값을 사용하여 1과 -1 사이의 값을 얻습니다
+            const red = Math.floor(255 * opacity); // 파란색에서 빨간색으로 이동
+            const blue = Math.floor(255 * (1 - opacity)); // 빨간색에서 파란색으로 이동
+            return `rgba(${red}, 0, ${blue}, ${opacity})`;
+        }
+        
+        // 피어슨 상관 계수 계산 함수
+        function pearsonCorrelation(x, y) {
+            const n = x.length;
+        const meanX = x.reduce((acc, val) => acc + val, 0) / n;
+        const meanY = y.reduce((acc, val) => acc + val, 0) / n;
+        const diffX = x.map(val => val - meanX);
+        const diffY = y.map(val => val - meanY);
+        const numerator = diffX.reduce((acc, val, idx) => acc + val * diffY[idx], 0);
+        const denominator = Math.sqrt(diffX.reduce((acc, val) => acc + val ** 2, 0) * diffY.reduce((acc, val) => acc + val ** 2, 0));
+        return numerator / denominator;
+    }
+    // 텍스트 길이 제한 함수
+    function truncateText(text, maxLength) {
+        if (text.length > maxLength) {
+            return text.slice(0, maxLength) + '...';
+        }
+        return text;
+    }
+    </script>        
+</body>
+</html>

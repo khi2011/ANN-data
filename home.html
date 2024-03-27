@@ -17,7 +17,7 @@
             <li><a href="csv to js converter.html">csv to js converter</a></li>
         </ol>
         
-        <div id="grid">         
+        <div>         
             <div>
                 <h2> Artificial Neural Network </h2> 
                 <p> 동영상을 통해 Artificial Neural Network (ANN)의 기본적인 동작 원리와 기원을 알 수 있습니다.</p>
@@ -28,63 +28,78 @@
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                </iframe></p>
+                    </iframe>
+                </p>
                 
+                <p><h3>머신러닝 맛보기</br></h3>
+                    <a href="https://teachablemachine.withgoogle.com/" target="_blank" title="Teachable Machine">Teachable Machine</a> = 코딩없이 머신러닝 만들기</br>
+                    <a href="https://ml-app.yah.ac/" target="_blank" title="ml-app"> ml-app</a> = Teachable Machine 만든 모델 실시간 화면을 카메라를 통해 반영</br>
+                </p>
+            </div>
+
+            <div id="grid">
                 <p>
-                    <p><h3>머신러닝 맛보기</br></h3>
-                        <a href="https://teachablemachine.withgoogle.com/" target="_blank" title="Teachable Machine">Teachable Machine</a> = 코딩없이 머신러닝 만들기</br>
-                        <a href="https://ml-app.yah.ac/" target="_blank" title="ml-app"> ml-app</a> = Teachable Machine 만든 모델 실시간 화면을 카메라를 통해 반영</br>
-                    </p>
-                </div>
-                <!--
-                    <div>
-                        <p>
-                            <li>데이터 과학과 공학의 차이</li>
-                            데이터 과학: 데이터 만들기, 데이터 이용, (작가)</br>
-                            데이터 공학: 데이터를 다루는 도구를 만듬, 도구 관리 (연필, 책, 도서관)</br>
-                        </br>
-                        <li>표 Table</li>
-                        행(Row) : 개체, 관측치, 기록, 사례, 경우</br>
-                        열(Colum) : 특성, 속성, 변수, field</br>
+                    <h3>용어정리</br></h3>
+                    <li>데이터 과학과 공학의 차이</li>
+                    데이터 과학: 데이터 만들기, 데이터 이용, (작가)</br>
+                    데이터 공학: 데이터를 다루는 도구를 만듬, 도구 관리 (연필, 책, 도서관)</br>
+                    </br>
+                    <li>표 Table</li>
+                    행(Row) : 개체, 관측치, 기록, 사례, 경우</br>
+                    열(Colum) : 특성, 속성, 변수, field</br>
                     </br>
                     독립변수, independent variable -> 원인</br>
                     종속변수, dependent variable -> 결과</br>
                     상관관계: 증감, 영향, 패턴을 가짐. 원인과 결과의 관계. 더 넓은 의미</br>
                     인과관계: 원인과 결과의 관계</br>
-                </p>
-                
-                <p>
+                    </br>
+
+                    <li>AI</li>
+                    AI(Artificial Intelligence) = 인간의 학습능력, 추론능력, 지각능력을 인공적으로 구현시키는 컴퓨터과학의 한 분야</br>
+                    Machine learing = 인공지능의 하위 집합으로, 많은 양의 데이터를 제공하여 명시적으로 프로그래밍하지 않고 신경망과 딥러닝을 
+                    사용하여 시스템이 자율적으로 학습하고 개선할 수 있게 하는 모델</br>
+                    Deep learing = 머신러닝의 하위 집합으로, 인간의 두뇌에서 영감을 얻은 방식으로 데이터를 처리하도록 하는 알고리즘.</br>
+                    </br>
+
                     <li>머신러닝 = 공식의 대중화</li>
                     지도학습(Supervised learning): 분류, 회귀, 기계를 가르침, 문제와 정답을 제공, 오차를 최소화하는 모델을 만듬 (= 역사적)</br>
                     비지도학습(Unsupervised learning): 군집화, 변환, 연관, 기계한테 데이터의 통찰력을 부여, 데이터의 성격 파악 (= 탐험)</br>
                     강화학습(Reinforcement learning): 문제만 있음, 기계의 성능 향상, 데이터의 최적화, 게임실력키우기</br>
-                </br>
-                <li>지도학습</li>
-                데이터를 충분히 수집, 학습, 모델 수립</br>
-                회귀(Regression) : 종속변수가 숫자일 때 사용</br>
-                분류(Classification) : 종속변수가 이름, 문자일 때 분류를 사용, 그룹을 구분하는 것(산)</br>
-            </br>
-            <li>비지도학습</li>
-            군집화(Clustering): 비슷한것을 모아서 그룹을 만듬(모래성), 비슷한 행(row)을 찾는 것</br>
-            연관(연관규칙학습, Association rule learning): 장바구니 학습, 열(colum)간의 연관성을 찾음, 추천 알고리즘</br>
-        </br>
-        <li>강화학습</li>
-        환경과 행동, 상태의 상과 벌, 그것을 평가하는 정책</br>
-    </br>
-    <li>회귀와 분류를 하는 알고리즘</li>
-    Decision Tree, Random forest, KNN, SVM, Neural Network 등</br>
-</br>
-<li>라이브러리<li>
-    tensorflow, convnetjs, brainjs, theano, caffe2, pytorch</br>
-</br>
-<li>ANN</li>
-artificial neural network = deep learing</br>
-1960-80년대 , 단순 신공망, 1개의 뉴련=perceptron 을 여러개를 결합함
-node의 결합 = 1layer
-</br>
-</p>
-</div>-->
-</div>
-</body>
+                    </br>
 
+                    <li>지도학습</li>
+                    데이터를 충분히 수집, 학습, 모델 수립</br>
+                    회귀(Regression) : 종속변수가 숫자일 때 사용</br>
+                    분류(Classification) : 종속변수가 이름, 문자일 때 분류를 사용, 그룹을 구분하는 것(산)</br>
+                    </br>
+
+                    <li>비지도학습</li>
+                    군집화(Clustering): 비슷한것을 모아서 그룹을 만듬(모래성), 비슷한 행(row)을 찾는 것</br>
+                    연관(연관규칙학습, Association rule learning): 장바구니 학습, 열(colum)간의 연관성을 찾음, 추천 알고리즘</br>
+                    </br>
+
+                    <li>강화학습</li>
+                    환경과 행동, 상태의 상과 벌, 그것을 평가하는 정책</br>
+                    </br>
+
+                    <li>회귀와 분류를 하는 알고리즘</li>
+                    Decision Tree, Random forest, KNN, SVM, Neural Network 등</br>
+                    </br>
+
+                    <li>라이브러리</li>
+                    tensorflow, convnetjs, brainjs, theano, caffe2, pytorch</br>
+                    </br>
+                    <li>Perceptron</li>
+                    1957년 로젠 블릿이 고안한 알고르즘의 유형</br>
+                    퍼셉트론은 입력층과 출력층 사이의 하나의 레이어만 존재하며, 원시적인 형태의 신경망이다. </br>
+                    </br>
+
+                    <li>ANN</li>
+                    artificial neural network = deep learing</br>
+                    생물학의 신경망에서 영감을 얻은 알고리즘으로 여러개의 퍼셉트론을 연결시킨 구조</br>
+                    </br>
+                </p>
+            </div>          
+        </div>
+    </body>
 </html>
