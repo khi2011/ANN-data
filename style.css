@@ -1,0 +1,134 @@
+body {
+  font-family: "Times New Roman", Times, serif;
+  background-color: rgb(112 , 128 , 144) !important; /* 배경색을 회색(그레이)으로 지정 */
+  }
+
+a {
+  color: rgb(255, 255, 255); /* 링크의 글자 색을 회색으로 지정 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+h1 {
+  color: rgb(255, 255, 255); /* 제목의 글자 색을 회색으로 지정 */
+  text-decoration: none;
+  font-size: 60px;
+  text-align: center;
+  border-bottom:3px solid rgb(255, 255, 255);
+  margin:0;
+  padding:15px;
+}
+
+h2, h3 {
+  color: rgb(255, 255, 255); /* 제목의 글자 색을 회색으로 지정 */
+  font-size: 30px;
+  margin:0;
+  padding:15px;
+}
+
+div {
+  text-align: center; /* 문단을 가운데 정렬 */
+  color: rgb(255, 255, 255); /* 문단의 글자 색을 회색으로 지정 */
+  font-size: 20px;
+  width: 1fr;
+  margin: 50px;
+  padding: 0px;
+}
+
+p {
+  color: rgb(255, 255, 255); /* 문단의 글자 색을 회색으로 지정 */
+  font-size: 20px;
+}
+
+ol{
+  color: rgb(255, 255, 255); /* 목록 링크의 글자 색을 회색으로 지정 */
+  font-size: 20px;
+  text-decoration: none;
+  border-bottom:3px solid rgb(255, 255, 255);
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  width: 1fr;
+  margin: 0px;
+  padding: 0px;
+}
+
+li{
+  width: flex;
+  text-align: left; /* 가운데 정렬 */
+  justify-content: 10px;
+  margin-right: 50px;
+  padding: 5px;
+}
+
+#grid {
+  display: grid;
+  text-align: left;
+  grid-template-columns: 1fr;
+  width: 800fr;
+  margin: 50px;
+  padding: 20px;
+}
+
+@media (max-width:600px) {
+  #grid {
+    display: block;
+  }
+  ol { 
+    border-right: none;
+  }
+}
+
+
+/*csv to js 변환기*/
+label {
+  color: rgb(255, 255, 255); /* 원하는 색상으로 변경하세요. */
+}
+
+#fileInput {
+  display: none;
+}
+#uploadButton {
+  padding: 10px 15px;
+  background-color: #696969;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+#fileName {
+  margin-top: 10px;
+}
+#inputColumns, #outputColumns {
+  width: 50px;
+}
+#downloadButton {
+  display: none;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.formula {
+  font-size: 20px; /* 수식의 글자 크기 조절 */
+  font-family: Arial, sans-serif; /* 수식의 글꼴 지정 */
+  color: rgb(255, 255, 255); /* 수식의 글자 색상 */
+  margin: 10px; /* 수식과 주변 요소 사이의 간격 조절 */
+}
+
+#container {
+  text-align: center; /* 내부 요소 가운데 정렬 */
+}
+canvas {
+  max-width: 400px; /* 그림의 최대 너비를 조정합니다 */
+  max-height: 400px; /* 그림의 최대 높이를 조정합니다 */
+  margin-left: 0px; /* 왼쪽 여백을 50px로 지정하여 오른쪽으로 이동 */
+  border:3px solid rgb(0, 0, 0);
+  padding:5px;
+  display: inline-block; /* 그림과 막대를 인라인으로 표시합니다 */
+  vertical-align: top; /* 막대를 그림의 상단에 정렬합니다 */
+}
+
+.custom-image {
+  width: 400px; /* 기본 너비 */
+  height: auto; /* 높이는 자동 조정 */
+}

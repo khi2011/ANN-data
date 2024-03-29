@@ -1,62 +1,27 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>TensorFlow.js - Artificial Neural Network</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@latest"></script>
+    <title>TensorFlow.js Tutorial</title>
+
+    <!-- Import TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
 </head>
 
 <body>
-    <h1><a href="home.html">Data Science & Engineering</a></h1>  
-    
-    <ol>
-        <li><a href="Correlation Coefficient.html">Correlation Coefficient</a></li>
-        <li><a href="Perceptron.html">Perceptron</a></li>
-        <li><a href="Artificial Neural Network.html">Artificial Neural Network</a></li>
-        <li><a href="csv to js converter.html">csv to js converter</a></li>
-    </ol>
-    
-    <div>
-        <h2>Perceptron</h2>
-    </div>
-
-    <div>
-        <img src="Perceptron.jpg" alt="이미지 설명" class="custom-image">
-    </div>
-
-    <div id="grid">
-        <p>
-            <strong>Perceptron</strong><br>
-            인공신경망(ANN)의 기본 구성 요소로 다수의 입력값을 받아 하나의 결과 값을 출력하는 알고리즘입니다.<br>
-            즉, 생물학적 신경계의 기본 단위인 신경세포(뉴런)의 동작 과정을 모델링한 알고리즘입니다.<br>
-            아래에서 Perceptron을 이용한 머신러닝을 실행해 봅시다.
-        </p>
-        
-        <p><strong>실행방법</strong><br>
-            1. 메뉴에 4번에서 엑셀의 csv 파일을 js 파일로 변환<br>
-            단, 엑셀파일에서 1번째 행은 데이터의 이름의 행으로 지정됨<br>
-            열의 갯수에 따른 input, output 값 지정<br><br>
-            2. 변환된 js 파일 업로드<br><br>
-            3. 반복횟수 지정 후 머신러닝 실행<br><br>
-            4. 머신러닝 종료 또는 정지 후 결과 값 다운로드<br><br>
-        </p>
-    </div>
-
-    <div>
-    <input type="file" id="fileInput" accept=".js" style="display: block; margin: 10px auto;"><br>
+    <input type="file" id="fileInput" accept=".js" /></br>
     <label for="epochsInput">Iteration:</label>
-    <input type="number" id="epochsInput" value="1000"><br><br>
+    <input type="number" id="epochsInput" value="1000000" /></br>
     <button id="startButton">머신러닝 시작</button>
-    <button id="stopButton">정지</button><br><br>
+    <button id="stopButton">정지</button></br></br>
     <button id="downloadButton" style="display: none;">결과 파일 다운로드</button>
 
     <script>
         let isTraining = false;
         let model;
         let predictionData;
-        
+
         // Function to save data to a text file
         function saveDataToFile(data, filename) {
             var blob = new Blob([data], { type: 'text/plain' });
@@ -87,7 +52,7 @@
                 // Assuming inputData and outputData are defined in the loaded script
                 var inputTensor = tf.tensor(inputData);
                 var outputTensor = tf.tensor(outputData);
-                
+
                 // Create the model architecture based on the uploaded data
                 var X = tf.input({ shape: [inputData[0].length] });
                 var Y = tf.layers.dense({ units: outputData[0].length }).apply(X);
@@ -100,7 +65,7 @@
                 };
                 model.compile(compileParam);
                 tfvis.show.modelSummary({ name: 'Model Summary', tab: 'Model' }, model);
-                
+
                 // Train the model with the uploaded data
                 var _history = [];
                 var epochs = parseInt(document.getElementById('epochsInput').value);
@@ -110,23 +75,23 @@
                         onEpochEnd: function (epoch, logs) {
                             console.log('epoch', epoch, logs, 'RMSE=>', Math.sqrt(logs.loss));
                             _history.push(logs);
-                            tfvis.show.history({ name: 'loss', tab: 'history', style: {textColor: 'black'}}, _history, ['loss']);
+                            tfvis.show.history({ name: 'loss', tab: '역사' }, _history, ['loss']);
                         }
                     }
                 }
                 model.fit(inputTensor, outputTensor, fitParam).then(function (result) {
                     isTraining = false;
-                    
+
                     // Use the model
                     var predictedOutput = model.predict(inputTensor);
                     predictedOutput.print();
                     predictionData = predictedOutput.arraySync();
-                    
+
                     const weights = model.getWeights()[0].dataSync();
                     const bias = model.getWeights()[1].dataSync();
                     console.log('Weights:', weights);
                     console.log('Bias:', bias);
-                    
+
                     // Show the download button
                     document.getElementById('downloadButton').style.display = 'block';
                 });
@@ -150,7 +115,7 @@
                     predictionText += predictionData[i].join('\t') + '\n';
                 }
                 saveDataToFile(predictionText, 'predictions_output.txt');
-                
+
                 const weights = model.getWeights()[0].dataSync();
                 const bias = model.getWeights()[1].dataSync();
                 var weightsText = 'Weights:\n' + weights.join('\n');
@@ -163,6 +128,6 @@
         document.getElementById('stopButton').addEventListener('click', stopMachineLearning);
         document.getElementById('downloadButton').addEventListener('click', downloadResults);
     </script>
-    </div>
 </body>
+
 </html>
