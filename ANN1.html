@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TensorFlow.js Tutorial</title>
+
+    <!-- Import TensorFlow.js 1. tf 머신러인 모델 라이브러리, 2. 실시간 모델 입력값, 출력값, 그래프 그리기, 3. 데이터-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
+    <script src="240325_Creep data_test3.js"></script>
+</head>
+
+<body>
+    <script>
+          // Function to save data to a text file
+          function saveDataToFile(data, filename) {
+            var blob = new Blob([data], { type: 'text/plain' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+
+        // 1. 과거의 데이터를 준비합니다. 
+        var 원인 = tf.tensor(inputData);
+        var 결과 = tf.tensor(outputData);
+
+        // 2. 모델의 모양을 만듭니다. 
+        var X = tf.input({ shape: [22] });
+        var H1 = tf.layers.dense({ units: 10, activation:'relu'}).apply(X);// hidden layer 추가
+        var H2 = tf.layers.dense({ units: 10, activation:'relu'}).apply(H1);// hidden layer 추가
+        var Y = tf.layers.dense({ units: 2 }).apply(H2);
+        var model = tf.model({ inputs: X, outputs: Y });
+
+        // Compile the model with hyperparameters
+        var compileParam = { 
+          optimizer: tf.train.adam(0.45, 0.45, 0.45, 1e-7),//(learningRate, beta1, beta2, epsilon)
+          loss: tf.losses.meanSquaredError};
+        model.compile(compileParam);
+        tfvis.show.modelSummary({name:'Model Summary', tab:'Model'}, model);
+
+        // 3. 데이터로 모델을 학습시킵니다. 
+        var _history = [];
+        var fitParam = { 
+          epochs: 20000, //var fitParam = {epochs: 100}
+          callbacks:{
+            onEpochEnd:
+              function(epoch, logs){
+                console.log('epoch', epoch, logs, 'RMSE=>', Math.sqrt(logs.loss));
+                _history.push(logs); //실시간 그래프 그리기
+                tfvis.show.history({name:'loss', tab:'역사'}, _history, ['loss']); //실시간 그래프 입력값
+              }
+          }
+        } // loss 추가 예제
+        model.fit(원인, 결과, fitParam).then(function (result) {
+            
+            // 4. 모델을 이용합니다. 
+            // 4.1 기존의 데이터를 이용
+            var 예측한결과 = model.predict(원인);
+            예측한결과.print();
+            const weights = model.getWeights()[0].dataSync();
+            const bias = model.getWeights()[1].dataSync();
+            console.log('Weights:', weights);
+            console.log('Bias:', bias);
+        
+
+            // Save predictions to a text file
+            var 예측값 = 예측한결과.arraySync();
+            var 예측값Text = '';
+
+            for (var i = 0; i < 예측값.length; i++) {
+                예측값Text += 예측값[i].join('\t') + '\n';
+            }
+
+            saveDataToFile(예측값Text, 'predictions.txt');
+
+            // Save weights to a text file
+              var weightsText = 'Weights:\n';
+              for (var i = 0; i < weights.length; i++) {
+                  if (Array.isArray(weights[i])) {
+                      weightsText += weights[i].join('\t') + '\n';
+                  } else {
+                      weightsText += weights[i] + '\n'; // 단일 값인 경우 그냥 출력
+                  }
+              }
+              weightsText += '\nBias:\n';
+              for (var i = 0; i < bias.length; i++) {
+                  if (Array.isArray(bias[i])) {
+                      weightsText += bias[i].join('\t') + '\n';
+                  } else {
+                      weightsText += bias[i] + '\n'; // 단일 값인 경우 그냥 출력
+                  }
+              }
+              saveDataToFile(weightsText, 'weights.txt');
+
+      });  
+
+    </script>
+</body>
+
+</html>
